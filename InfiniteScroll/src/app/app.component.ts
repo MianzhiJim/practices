@@ -35,7 +35,7 @@ export class AppComponent {
       // console.log(this.hasNext)
       if (this.hasNext) {
         this.service.getMore(this.after).subscribe(data => {
-          console.log(data);
+          // console.log(data);
           this.hasNext = data.hasNext;
           for (let testimonial of data.testimonials) {
             this.testimonialContainer.push(testimonial);
