@@ -1,0 +1,8 @@
+<div id="container" (scroll)="onScroll()">
+  <ul>
+    <li class="testimonial" *ngFor="let testimonial of testimonialContainer">
+      {{ testimonial.message }}
+      <hr>
+    </li>
+  </ul>
+</div>
