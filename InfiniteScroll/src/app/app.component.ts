@@ -18,7 +18,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.service.getFirstFive().subscribe(data => {
-      // console.log(data);
+      console.log(data);
       this.hasNext = data.hasNext;
       for (let testimonial of data.testimonials) {
         this.testimonialContainer.push(testimonial);
