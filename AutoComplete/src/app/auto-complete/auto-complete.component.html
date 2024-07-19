@@ -1,0 +1,11 @@
+<input type="text" [(ngModel)]="keyword" (change)="onChange()">
+<ul>
+  @for (result of results; track result) {
+    <li (click)="onSelect.emit(result)">{{ result }}</li>
+  }
+</ul>
+<!-- <p-autoComplete
+  [(ngModel)]="keyword"
+  [suggestions]="results"
+  (completeMethod)="onChange()"
+/> -->
