@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@primevue/themes": "^4.0.2",
+    "@vueuse/core": "^10.11.0",
     "axios": "^1.7.2",
     "primevue": "^4.0.2",
-    "rxjs": "^7.8.1",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },

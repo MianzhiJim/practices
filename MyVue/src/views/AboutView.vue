@@ -1,15 +1,69 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <ScrollPanel
+      class="container"
+      :dt="{
+          bar: {
+              background: '{primary.color}'
+          }
+      }">
+      <div ref="el" class="el">
+        <div v-for="product of products">
+          <Card>
+            <template #title>
+              <img :src="product.thumbnail" alt="">
+            </template>
+            <template #content>
+              <h3>{{ product.title }}</h3>
+              <p>{{ product.description }}</p>
+            </template>
+          </Card>
+          <Divider />
+        </div>
+      </div>
+    </ScrollPanel>
   </div>
 </template>
 
 <style>
 @media (min-width: 1024px) {
   .about {
-    min-height: 100vh;
-    display: flex;
+    margin-top: 55px;
+    display: block;
     align-items: center;
   }
 }
+
+.container {
+  padding: 20px;
+  width: fit-content;
+  height: 800px;
+}
 </style>
+
+<script setup>
+import { onMounted, ref } from 'vue';
+import Card from 'primevue/card';
+import Divider from 'primevue/divider';
+import ScrollPanel from 'primevue/scrollpanel';
+import { useInfiniteScroll } from '@vueuse/core'
+
+const el = ref<HTMLElement>(null);
+const products = ref([]);
+const total = ref(0);
+
+useInfiniteScroll(el, loadData, { distance: 5 });
+
+loadData();
+
+async function loadData() {
+  if (products.value.length !== 0 && products.value.length >= total.value) return;
+  const res = await fetch(
+    `https://dummyjson.com/products/?limit=10&skip=${products.value.length}`
+  );
+  const data = await res.json();
+  total.value = data.total;
+  products.value = products.value.concat(data.products);
+}
+</script>

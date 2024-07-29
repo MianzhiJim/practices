@@ -54,5 +54,4 @@ const getSeverity = (price) => {
 </template>
 
 <style scoped>
-
 </style>
