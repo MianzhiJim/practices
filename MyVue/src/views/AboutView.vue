@@ -3,12 +3,14 @@
     <h1>This is an about page</h1>
     <ScrollPanel
       class="container"
+      ref="scrollPanel"
+      style="padding: 20px; width: fit-content; height: 800px;"
       :dt="{
           bar: {
               background: '{primary.color}'
           }
       }">
-      <div ref="el" class="el">
+      <div>
         <div v-for="product of products">
           <Card>
             <template #title>
@@ -21,6 +23,7 @@
           </Card>
           <Divider />
         </div>
+        <div ref="el" class="el"></div>
       </div>
     </ScrollPanel>
   </div>
@@ -35,10 +38,8 @@
   }
 }
 
-.container {
-  padding: 20px;
-  width: fit-content;
-  height: 800px;
+.el {
+  height: 1px;
 }
 </style>
 
@@ -49,13 +50,10 @@ import Divider from 'primevue/divider';
 import ScrollPanel from 'primevue/scrollpanel';
 import { useInfiniteScroll } from '@vueuse/core'
 
-const el = ref<HTMLElement>(null);
+const el = ref(null);
+const scrollPanel = ref(null)
 const products = ref([]);
 const total = ref(0);
-
-useInfiniteScroll(el, loadData, { distance: 5 });
-
-loadData();
 
 async function loadData() {
   if (products.value.length !== 0 && products.value.length >= total.value) return;
@@ -65,5 +63,9 @@ async function loadData() {
   const data = await res.json();
   total.value = data.total;
   products.value = products.value.concat(data.products);
-}
+};
+
+useInfiniteScroll(el, loadData, { distance: 5, container: scrollPanel });
+
+// loadData();
 </script>
