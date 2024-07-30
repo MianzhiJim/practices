@@ -5,6 +5,7 @@ import Menubar from 'primevue/menubar';
 import AutoComplete from 'primevue/autocomplete';
 import Button from 'primevue/button';
 import { ref } from 'vue';
+import Modal from './views/Modal.vue';
 
 const router = useRouter();
 const barItems = ref([
@@ -22,6 +23,7 @@ const barItems = ref([
 const input = ref('');
 const suggestions = ref([]);
 const albums = ref([]);
+const showModal = ref(false);
 
 const autoComplete = async () => {
   await fetch(`https://itunes.apple.com/search?term=${input.value}&media=music&entity=album&attribute=artistTerm&limit=50`)
@@ -58,6 +60,16 @@ const search = async () => {
         </div>
       </template>
     </Menubar>
+  </div>
+
+  <div id="app">
+    <Button @click="showModal = true">Open Modal</Button>
+    <teleport to="body">
+      <Modal v-if="showModal" @close="showModal = false">
+        <h2>This is a Modal</h2>
+        <p>Content inside the modal.</p>
+      </Modal>
+    </teleport>
   </div>
 
   <RouterView :albums="albums" />

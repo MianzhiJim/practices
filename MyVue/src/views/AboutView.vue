@@ -47,6 +47,7 @@
 import { onMounted, ref } from 'vue';
 import Card from 'primevue/card';
 import Divider from 'primevue/divider';
+import Button from 'primevue/button';
 import ScrollPanel from 'primevue/scrollpanel';
 import { useInfiniteScroll } from '@vueuse/core'
 
