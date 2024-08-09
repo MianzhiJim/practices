@@ -6,7 +6,7 @@
 
   const apiUrl = 'http://localhost:4231/api/news';
 
-  let stories = await axios.get(apiUrl).then(res => res.data);
+  let stories = await axios.get(apiUrl).then(res => res.data.reverse());
   console.log(stories)
 
   const visible = ref(false);

@@ -2,8 +2,30 @@
   import axios from 'axios';
   import { ref } from 'vue';
 
+  const apiUrl = 'http://localhost:4231/api/news';
+
   const visibleTop = ref(false);
   const content = ref('');
+
+  function onClick() {
+    console.log(content.value)
+    const body = {
+      publisherName: 'Jim',
+      content : {
+        image: 'dummy.jpg',
+        video: 'dummy.mp4',
+        text: content.value
+      },
+      comment: [],
+      likedIdList: []
+    };
+    axios.post(apiUrl, body)
+    .then(res => {
+      // console.log(res)
+      content.value = '';
+      visibleTop.value = !visibleTop.value;
+    })
+  }
 </script>
 
 <template>
@@ -17,7 +39,7 @@
         </FloatLabel>
       </div>
       <template #footer>
-        <Button label="Submit" icon="pi pi-upload" severity="success" text></Button>
+        <Button @click="onClick" label="Submit" icon="pi pi-upload" severity="success" text></Button>
       </template>
     </Drawer>
   </div>
