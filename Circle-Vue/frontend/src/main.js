@@ -6,6 +6,7 @@ import router from './router'
 import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura';
 import ToastService from 'primevue/toastservice';
+import StyleClass from 'primevue/styleclass';
 
 import 'primeicons/primeicons.css'
 
@@ -15,14 +16,10 @@ app.use(router)
 
 app.use(PrimeVue, {
     theme: {
-        preset: Aura,
-        options: {
-            prefix: 'p',
-            darkModeSelector: '.p-dark',
-            cssLayer: false,
-        }
+        preset: Aura
     }
 })
+app.directive('styleclass', StyleClass);
 
 app.use(ToastService)
 
