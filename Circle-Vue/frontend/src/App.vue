@@ -26,8 +26,18 @@ const close = (event) => {
   visible.value = event;
 }
 const isLogin = ref(false);
+if (localStorage.getItem('userInfo')) {
+  isLogin.value = true;
+}
+
 const handleLogin = (event) => {
   isLogin.value = event;
+}
+
+function onSignOut() {
+  isLogin.value = false;
+  localStorage.removeItem('userInfo');
+  // console.log(localStorage.getItem('userInfo'))
 }
 </script>
 
@@ -37,12 +47,12 @@ const handleLogin = (event) => {
       <template #start><b>Cricle</b></template>
       <template #end>
         <Button v-if="!isLogin" icon="pi pi-sign-in" label="Sign In" severity="secondary" @click="visible = !visible" text></Button>
-        <Button v-else icon="pi pi-sign-out" label="Sign Out" severity="secondary" @click="isLogin = false" text></Button>
+        <Button v-else icon="pi pi-sign-out" label="Sign Out" severity="secondary" @click="onSignOut" text></Button>
       </template>
     </Menubar>
   </div>
   <main>
-    <RouterView class="router-view"/>
+    <RouterView class="router-view" :isLogin="isLogin"/>
     <Login :visible="visible" @close-modal="close" @logined="handleLogin"></Login>
   </main>
 </template>

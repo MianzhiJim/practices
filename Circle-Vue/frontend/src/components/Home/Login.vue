@@ -7,7 +7,7 @@
       </div>
       <div class="password">
         <label for="password" class="password-label">Password</label>
-        <InputText id="password" v-model="pwd" autocomplete="off" />
+        <InputText id="password" type="password" v-model="pwd" autocomplete="off" />
       </div>
       <div class="btns">
         <Button type="button" class="btn1" label="Cancel" severity="secondary" @click="onClick"></Button>
@@ -28,11 +28,11 @@
       </div>
       <div class="password">
         <label for="password" class="password-label">Password</label>
-        <InputText id="password" v-model="pwd" autocomplete="off" />
+        <InputText id="password" type="password" v-model="pwd" autocomplete="off" />
       </div>
       <div class="c-password">
         <label for="c-password" class="c-password-label">Confirm Password</label>
-        <InputText id="c-password" v-model="c_pwd" autocomplete="off" />
+        <InputText id="c-password" type="password" v-model="c_pwd" autocomplete="off" />
       </div>
       <div class="btns">
         <Button type="button" class="btn1" label="Cancel" severity="secondary" @click="onClick"></Button>
@@ -70,6 +70,8 @@
       console.log(res);
       if (res.status === 200) {
         emit('logined', true);
+        localStorage.setItem('userInfo', JSON.stringify(res.data));
+        // console.log(localStorage.getItem('userInfo'))
       }
     });
 
@@ -104,6 +106,10 @@
 
   function onSwitch() {
     toSignup.value = !toSignup.value;
+    username.value = '';
+    email.value = '';
+    pwd.value = '';
+    c_pwd.value = '';
   }
 </script>
 
