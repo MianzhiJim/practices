@@ -20,11 +20,13 @@
     <div class="container">
       <div class="username">
         <label for="username" class="username-label">Username</label>
-        <InputText id="username" v-model="username" autocomplete="off" />
+        <InputText id="username" v-model="username" :invalid="existName" autocomplete="off" />
+        <small v-if="existName">Username already exists</small>
       </div>
       <div class="email">
         <label for="email" class="email-label">Email</label>
-        <InputText id="email" v-model="email" autocomplete="off" />
+        <InputText id="email" v-model="email" :invalid="existEmail" autocomplete="off" />
+        <small v-if="existEmail">Email already exists</small>
       </div>
       <div class="password">
         <label for="password" class="password-label">Password</label>
@@ -32,7 +34,8 @@
       </div>
       <div class="c-password">
         <label for="c-password" class="c-password-label">Confirm Password</label>
-        <InputText id="c-password" type="password" v-model="c_pwd" autocomplete="off" />
+        <InputText id="c-password" type="password" :invalid="notSame" v-model="c_pwd" autocomplete="off" />
+        <small v-if="notSame">Password not correct</small>
       </div>
       <div class="btns">
         <Button type="button" class="btn1" label="Cancel" severity="secondary" @click="onClick"></Button>
@@ -55,6 +58,13 @@
   const pwd = ref('');
   const c_pwd = ref('');
   const toSignup = ref(false);
+  // const emptyName = ref(false);
+  // const emptyEmail = ref(false);
+  // const emptyPwd = ref(false);
+  // const emptyCpwd = ref(false);
+  const existName = ref(false);
+  const existEmail = ref(false);
+  const notSame = ref(false);
 
   function onClick() {
     emit('close-modal', false);
@@ -80,28 +90,57 @@
     emit('close-modal', false);
   }
 
-  function onSignUp() {
+  async function onSignUp() {
     // axios.get(`${apiUrl}/checkExistByUsername/${username.value}`)
     // .then(res => console.log(res))
 
-    const body = {
-      name: username.value,
-      userName: username.value,
-      userEmail: email.value,
-      password: pwd.value,
-      userRole: 'user',
-      age: 18,
-      gender: 'male',
-      phone: '1111111111',
+    if (username.value !== '') {
+      const checkName = await axios.get(`${apiUrl}/register/checkExistByUsername/${username.value}`);
+      if (checkName.data) {
+        existName.value = true;
+      }
+      else {
+        existName.value = false;
+      }
     }
-    axios.post(`${apiUrl}/register/createNewAccount`, body)
-    .then(res => console.log(res));
+    if (email.value !== '') {
+      const checkEmail = await axios.get(`${apiUrl}/register/checkExistByEmail/${email.value}`);
+      // console.log(checkEmail.data)
+      if (checkEmail.data) {
+        existEmail.value = true;
+      }
+      else {
+        existEmail.value = false;
+      }
+    }
 
-    username.value = '';
-    email.value = '';
-    pwd.value = '';
-    c_pwd.value = '';
-    toSignup.value = !toSignup.value;
+    if (pwd.value !== c_pwd.value) {
+      notSame.value = true;
+    }
+    else {
+      notSame.value = false;
+    }
+
+    if (!existName.value && !existEmail.value && !notSame.value && username.value && email.value && pwd.value) {
+      const body = {
+        name: username.value,
+        userName: username.value,
+        userEmail: email.value,
+        password: pwd.value,
+        userRole: 'user',
+        age: 18,
+        gender: 'male',
+        phone: '1111111111',
+      }
+      axios.post(`${apiUrl}/register/createNewAccount`, body)
+      .then(res => console.log(res));
+
+      username.value = '';
+      email.value = '';
+      pwd.value = '';
+      c_pwd.value = '';
+      toSignup.value = !toSignup.value;
+    }
   }
 
   function onSwitch() {
@@ -116,9 +155,14 @@
 <style scoped>
   .username, .email, .password, .c-password {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    /* align-items: center; */
     justify-content: center;
     margin-bottom: 10px;
+  }
+
+  small {
+    color: red;
   }
 
   .username-label, .email-label, .password-label, .c-password-label {

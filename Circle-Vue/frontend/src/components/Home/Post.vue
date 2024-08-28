@@ -39,7 +39,9 @@
         </FloatLabel>
       </div>
       <template #footer>
-        <Button @click="onClick" label="Submit" icon="pi pi-upload" severity="success" text></Button>
+        <div class="submit">
+          <Button @click="onClick" label="Submit" icon="pi pi-check" icon-pos="right" severity="success" raised></Button>
+        </div>
       </template>
     </Drawer>
   </div>
@@ -53,6 +55,12 @@
   }
 
   .input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .submit {
     display: flex;
     align-items: center;
     justify-content: center;
