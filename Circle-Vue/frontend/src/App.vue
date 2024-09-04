@@ -19,6 +19,11 @@ const items = ref([
     label: 'Admin',
     icon: 'pi pi-spin pi-cog',
     command: () => { router.push('/admin') }
+  },
+  {
+    label: 'ANGULAR',
+    icon: 'pi pi-globe',
+    command: () => { router.push('/angular') }
   }
 ])
 const visible = ref(false);

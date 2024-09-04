@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AutoComplete": {
+    "Micro-Frontend": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/auto-complete",
+            "outputPath": "dist/micro-frontend",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -34,8 +34,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1mb",
-                  "maximumError": "10mb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -55,15 +55,12 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "proxyConfig": "proxy.conf.json"
-          },
           "configurations": {
             "production": {
-              "buildTarget": "AutoComplete:build:production"
+              "buildTarget": "Micro-Frontend:build:production"
             },
             "development": {
-              "buildTarget": "AutoComplete:build:development"
+              "buildTarget": "Micro-Frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +68,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "AutoComplete:build"
+            "buildTarget": "Micro-Frontend:build"
           }
         },
         "test": {
@@ -87,8 +84,6 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
-              "node_modules/primeng/resources/primeng.min.css",
               "src/styles.css"
             ],
             "scripts": []

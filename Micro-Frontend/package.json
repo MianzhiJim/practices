@@ -1,17 +1,17 @@
 {
-  "name": "auto-complete",
+  "name": "micro-frontend",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --output-hashing=none --configuration production",
-    "package": "cat dist/auto-complete/browser/{polyfills,main}.js > dist/auto-complete/browser/auto-complete.js",
+    "build": "ng build --prod --output-hashing=none",
+    "package": "cat dist/micro-frontend/browser/{polyfills,main}.js > dist/micro-frontend/browser/calendar.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^17.3.12",
+    "@angular/animations": "^17.3.0",
     "@angular/common": "^17.3.0",
     "@angular/compiler": "^17.3.0",
     "@angular/core": "^17.3.0",
@@ -20,7 +20,7 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
-    "primeng": "^17.18.5",
+    "@webcomponents/custom-elements": "^1.6.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
